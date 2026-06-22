@@ -28,5 +28,5 @@ outputs:
   committed:
     description: Commit ID of auto-fix pushed, if enabled and changes were required
 runs:
-  using: 'node12'
+  using: 'node24'
   main: 'dist/index.js'

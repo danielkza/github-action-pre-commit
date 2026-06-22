@@ -5,7 +5,6 @@ const os = require('os');
 const path = require('path');
 const util = require('util');
 
-const cache = require('@actions/cache');
 const core = require('@actions/core');
 const exec = require('@actions/exec');
 const github = require('@actions/github');
@@ -59,10 +58,6 @@ async function main() {
     const pr = github.context.payload.pull_request;
     const push = !!token && !!pr;
 
-    const cachePaths = [path.join(os.homedir(), '.cache', 'pre-commit')];
-    const py = getPythonVersion();
-    const cacheKey = `pre-commit-2-${hashString(py)}-${hashFile('.pre-commit-config.yaml')}`;
-    const restored = await cache.restoreCache(cachePaths, cacheKey);
     const ret = await exec.exec('pre-commit', args, {ignoreReturnCode: push});
     if (!restored) {
         try {
